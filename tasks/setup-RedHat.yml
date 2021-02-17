@@ -1,13 +1,15 @@
 ---
+- name: Add PostgreSQL reposoitory
+  yum_repository:
+    name: postgresql-10
+    description: postgresql yum repo
+    baseurl: https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/
+    gpgkey:  https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG-10
+
 - name: Ensure PostgreSQL packages are installed.
   yum:
-    name: "{{ postgresql_packages }}"
+    name: postgresql10-server
     state: present
-    enablerepo: "{{ postgresql_enablerepo | default(omit, true) }}"
-    # Don't let postgresql-contrib cause the /usr/bin/python symlink
-    # to be installed, which breaks later Ansible runs on Fedora 30,
-    # and affects system behavior in multiple ways.
-    exclude: python-unversioned-command
 
 - name: Ensure PostgreSQL Python libraries are installed.
   yum:
