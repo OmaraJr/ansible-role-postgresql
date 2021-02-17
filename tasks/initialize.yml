@@ -20,11 +20,6 @@
   register: pgdata_dir_version
   tags: existing
 
-# - debug: 
-#     msg: "this does not exist {{ postgresql_data_dir }}"
-#   when: pgdata_dir_version.stat.exists
-#   tags: existing
-
 - name: Ensure PostgreSQL database is initialized.
   command: "{{ postgresql_bin_path }}/postgresql-{{ postgresql_version }}-setup initdb"
   when: pgdata_dir_version.stat.exists == false
